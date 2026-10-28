@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import React, { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 
 interface HeroParticleSceneProps {
   motionEnabled: boolean;
@@ -20,7 +20,7 @@ varying float vAlpha;
 void main() {
   float p = smoothstep(0.02, 0.82, uProgress);
   
-  // Exact Sarthak mathematical undulating ribbon formula
+  // Mathematical undulating ribbon formula
   vec3 target = vec3(
     (aSeed - 0.5) * 2.5,
     sin(aSeed * 25.1327) * 0.055 + (floor(position.x * 4.0 + 2.0) - 2.0) * 0.18,
@@ -62,7 +62,9 @@ void main() {
 }
 `;
 
-export default function HeroParticleScene({ motionEnabled }: HeroParticleSceneProps) {
+export default function HeroParticleScene({
+  motionEnabled,
+}: HeroParticleSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -73,12 +75,12 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
 
     const handleMotion = (e: Event) => {
       const ce = e as CustomEvent<boolean>;
-      if (typeof ce.detail === 'boolean') {
+      if (typeof ce.detail === "boolean") {
         motionRef.current = ce.detail;
       }
     };
-    window.addEventListener('motion-change', handleMotion);
-    return () => window.removeEventListener('motion-change', handleMotion);
+    window.addEventListener("motion-change", handleMotion);
+    return () => window.removeEventListener("motion-change", handleMotion);
   }, [motionEnabled]);
 
   useEffect(() => {
@@ -93,16 +95,22 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
       canvas,
       alpha: true,
       antialias: false,
-      powerPreference: 'low-power',
+      powerPreference: "low-power",
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(
+      42,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100,
+    );
     camera.position.set(0, 0, 5);
 
     const calcViewport = () => {
-      const vHeight = 2 * Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
+      const vHeight =
+        2 * Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
       const vWidth = vHeight * camera.aspect;
       return { vHeight, vWidth };
     };
@@ -123,30 +131,32 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
     });
 
     const updateMeshAlignment = () => {
-      const portraitEl = document.getElementById('hero-portrait-anchor');
+      const portraitEl = document.getElementById("hero-portrait-anchor");
       const { vHeight: currentVHeight } = calcViewport();
 
       if (portraitEl && points) {
         const rect = portraitEl.getBoundingClientRect();
         const portraitCenterY = rect.top + rect.height / 2;
-        const targetY = (currentVHeight / 2) - (portraitCenterY / window.innerHeight) * currentVHeight;
+        const targetY =
+          currentVHeight / 2 -
+          (portraitCenterY / window.innerHeight) * currentVHeight;
         points.position.y = targetY;
         points.position.x = 0;
-        
+
         const targetScale = (rect.height / window.innerHeight) * currentVHeight;
         material.uniforms.uScale.value = targetScale;
       }
     };
 
     const img = new Image();
-    img.src = '/images/aakash-bw-v2.jpg';
+    img.src = "/images/aakash-bw-v2.jpg";
     img.onload = () => {
       const sampleW = window.innerWidth < 700 ? 180 : 300;
       const sampleH = Math.round(sampleW * 1.25);
-      const sampleCanvas = document.createElement('canvas');
+      const sampleCanvas = document.createElement("canvas");
       sampleCanvas.width = sampleW;
       sampleCanvas.height = sampleH;
-      const ctx = sampleCanvas.getContext('2d');
+      const ctx = sampleCanvas.getContext("2d");
       if (!ctx) return;
 
       ctx.drawImage(img, 0, 0, sampleW, sampleH);
@@ -158,8 +168,8 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
 
       for (let y = 0; y < sampleH; y++) {
         for (let x = 0; x < sampleW; x++) {
-          const normX = (x / sampleW - 0.5);
-          const normY = (0.5 - y / sampleH);
+          const normX = x / sampleW - 0.5;
+          const normY = 0.5 - y / sampleH;
 
           const idx = (y * sampleW + x) * 4;
           const r = imgData[idx];
@@ -177,9 +187,18 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
       }
 
       geometry = new THREE.BufferGeometry();
-      geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-      geometry.setAttribute('aColor', new THREE.Float32BufferAttribute(colors, 3));
-      geometry.setAttribute('aSeed', new THREE.Float32BufferAttribute(seeds, 1));
+      geometry.setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(positions, 3),
+      );
+      geometry.setAttribute(
+        "aColor",
+        new THREE.Float32BufferAttribute(colors, 3),
+      );
+      geometry.setAttribute(
+        "aSeed",
+        new THREE.Float32BufferAttribute(seeds, 1),
+      );
 
       const pointsMesh = new THREE.Points(geometry, material);
       points = pointsMesh;
@@ -198,12 +217,12 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Track scroll
     let heroScrollProgress = 0;
     const handleScroll = () => {
-      const heroEl = document.querySelector('.hero');
+      const heroEl = document.querySelector(".hero");
       if (heroEl) {
         const rect = heroEl.getBoundingClientRect();
         const scrolled = -rect.top;
@@ -211,7 +230,7 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
         heroScrollProgress = Math.min(Math.max(scrolled / total, 0), 1);
       }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     const clock = new THREE.Clock();
     let currentProgress = 0;
@@ -239,8 +258,8 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
       geometry?.dispose();
       material.dispose();
       renderer.dispose();
@@ -251,7 +270,7 @@ export default function HeroParticleScene({ motionEnabled }: HeroParticleScenePr
     <div
       ref={containerRef}
       className={`fixed inset-0 w-full h-full pointer-events-none transition-opacity duration-700 ${
-        isLoaded ? 'opacity-100' : 'opacity-0'
+        isLoaded ? "opacity-100" : "opacity-0"
       }`}
       style={{ zIndex: 0 }}
     >

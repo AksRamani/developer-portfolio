@@ -80,14 +80,12 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-6 left-0 right-0 z-50 px-4 md:px-8 pointer-events-none transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        visible ? 'translate-y-0 opacity-100' : '-translate-y-28 opacity-0'
-      }`}
+      className={`fixed top-4 left-0 right-0 z-50 px-4 md:px-8 pointer-events-none transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? "translate-y-0 opacity-100" : "-translate-y-28 opacity-0"}`}
     >
       <div className="max-w-[1120px] mx-auto pointer-events-auto">
         {/* Floating Capsule Bar */}
         <div
-          className={`flex items-center justify-between h-[66px] md:h-[70px] px-6 md:px-8 rounded-full border transition-all duration-300 ${
+          className={`flex items-center justify-between h-[68px] px-6 md:px-8 rounded-[22px] border transition-all duration-300 ${
             scrolled
               ? 'bg-[#121110]/95 backdrop-blur-2xl border-[#e7e1d5]/25 shadow-[0_16px_45px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.12)]'
               : 'bg-[#141312]/85 backdrop-blur-xl border-[#e7e1d5]/15 shadow-[0_12px_36px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]'
@@ -134,10 +132,10 @@ export default function Navbar() {
             {/* Gradient Let's Talk Button */}
             <Link
               href="#contact"
-              className="group flex items-center gap-3 px-5 py-2 rounded-full border border-white/20 hover:border-[#E5CBB0] bg-gradient-to-b from-[#2a2723] to-[#151412] hover:bg-[#E5CBB0] hover:from-[#E5CBB0] hover:to-[#E5CBB0] hover:text-[#17120d] hover:border-[#E5CBB0] text-[#f1eee8] hover:text-[#030303] text-[13px] font-sans font-medium transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_2px_8px_rgba(0,0,0,0.4)]"
+              className="nav-contact group flex items-center gap-3 px-5 py-2 rounded-full border border-white/20 hover:border-[#E5CBB0] bg-gradient-to-b from-[#2a2723] to-[#151412] hover:bg-[#E5CBB0] hover:from-[#E5CBB0] hover:to-[#E5CBB0] text-[13px] font-sans font-medium transition-all duration-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_2px_8px_rgba(0,0,0,0.4)]"
             >
-              <span>Let&apos;s talk</span>
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-current" />
+              <span className="nav-contact-text">Let&apos;s talk</span>
+              <ArrowUpRight className="nav-contact-icon w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
           </div>
 
@@ -181,7 +179,7 @@ export default function Navbar() {
             <Link
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff8c59] to-[#ff7536] text-[#030303] text-sm font-medium"
+              className="nav-contact-mobile mt-2 flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff8c59] to-[#ff7536] text-[#030303] text-sm font-medium"
             >
               <span>Let&apos;s talk</span>
               <ArrowUpRight className="w-4 h-4" />

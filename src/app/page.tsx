@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import ProofStrip from '@/components/ProofStrip';
 import AboutSection from '@/components/AboutSection';
 import ExperienceSection from '@/components/ExperienceSection';
+import TechMarquee from '@/components/TechMarquee';
 import TechnologiesSection from '@/components/TechnologiesSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import Footer from '@/components/Footer';
@@ -20,6 +21,7 @@ export default function Home() {
         <ProofStrip />
         <AboutSection />
         <ExperienceSection />
+        <TechMarquee />
         <TechnologiesSection />
         <ProjectsSection />
       </main>

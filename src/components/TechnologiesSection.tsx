@@ -39,6 +39,17 @@ const expertiseItems = [
     linkHref: '#projects',
     steps: ['01 Audit Core Web Vitals', '02 Implement technical SEO schemas', '03 Refine micro-interactions'],
   },
+  {
+    id: 3,
+    tag: '04 / VIBE CODING & AI WORKFLOWS',
+    headline: 'Build at the speed of thought.',
+    description:
+      'Pioneering modern vibe coding workflows with next-generation AI IDEs and autonomous dev tools. Orchestrating high-velocity code synthesis, instant refactoring, and creative exploration with Claude, Google Antigravity, OpenAI Codex, Trae, and Kiro AI.',
+    strengths: 'Claude Code · Google Antigravity · OpenAI Codex · Trae AI IDE · Kiro AI · Vibe Coding · Agentic Automation',
+    linkText: 'Explore engineering process ↗',
+    linkHref: '#contact',
+    steps: ['01 Formulate architecture & intent', '02 Accelerate synthesis via AI IDEs', '03 Rigorously test & ship production builds'],
+  },
 ];
 
 export default function TechnologiesSection() {
@@ -47,7 +58,7 @@ export default function TechnologiesSection() {
   const activeItem = expertiseItems.find((item) => item.id === expandedId) || expertiseItems[0];
 
   return (
-    <section id="stack" className="relative z-10 w-full bg-[#030303] py-28 md:py-36 px-6 md:px-12 border-t border-[var(--line)]/40">
+    <section id="disciplines" className="relative z-10 w-full bg-[#030303] py-28 md:py-36 px-6 md:px-12 border-t border-[var(--line)]/40">
       {/* Chapter Topline */}
       <div className="flex items-center justify-between pb-14 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] border-b border-[var(--line)]/30">
         <div className="flex items-center gap-3">

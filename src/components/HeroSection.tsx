@@ -1,15 +1,17 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowDown, ArrowUpRight, Play } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SignalText from './SignalText';
-import dynamic from 'next/dynamic';
+import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight, Play } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SignalText from "./SignalText";
+import dynamic from "next/dynamic";
 
-const HeroParticleScene = dynamic(() => import('./HeroParticleScene'), { ssr: false });
+const HeroParticleScene = dynamic(() => import("./HeroParticleScene"), {
+  ssr: false,
+});
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -23,32 +25,32 @@ export default function HeroSection() {
   // Initialize and sync motion preference
   useEffect(() => {
     try {
-      const stored = sessionStorage.getItem('motion');
-      if (stored === 'off') {
+      const stored = sessionStorage.getItem("motion");
+      if (stored === "off") {
         setMotionEnabled(false);
-        document.documentElement.dataset.motion = 'off';
+        document.documentElement.dataset.motion = "off";
       } else {
-        document.documentElement.dataset.motion = 'on';
+        document.documentElement.dataset.motion = "on";
       }
     } catch {}
 
     const handleMotion = (e: Event) => {
       const ce = e as CustomEvent<boolean>;
-      if (typeof ce.detail === 'boolean') {
+      if (typeof ce.detail === "boolean") {
         setTimeout(() => setMotionEnabled(ce.detail), 0);
       }
     };
-    window.addEventListener('motion-change', handleMotion);
-    return () => window.removeEventListener('motion-change', handleMotion);
+    window.addEventListener("motion-change", handleMotion);
+    return () => window.removeEventListener("motion-change", handleMotion);
   }, []);
 
   const toggleMotion = () => {
     setMotionEnabled((prev) => {
       const next = !prev;
       try {
-        sessionStorage.setItem('motion', next ? 'on' : 'off');
+        sessionStorage.setItem("motion", next ? "on" : "off");
       } catch {}
-      document.documentElement.dataset.motion = next ? 'on' : 'off';
+      document.documentElement.dataset.motion = next ? "on" : "off";
       return next;
     });
   };
@@ -59,21 +61,21 @@ export default function HeroSection() {
     const ctx = gsap.context(() => {
       // 1. Headline masked reveal with blur-to-focus
       gsap.fromTo(
-        '.hero .reveal-line',
+        ".hero .reveal-line",
         {
           yPercent: 105,
-          filter: 'blur(5px)',
+          filter: "blur(5px)",
           opacity: 0,
         },
         {
           yPercent: 0,
-          filter: 'blur(0px)',
+          filter: "blur(0px)",
           opacity: 1,
           duration: 1.25,
           stagger: 0.12,
-          ease: 'power4.out',
-          clearProps: 'transform,filter',
-        }
+          ease: "power4.out",
+          clearProps: "transform,filter",
+        },
       );
 
       // 2. Description paragraph focus entrance
@@ -82,18 +84,18 @@ export default function HeroSection() {
           descRef.current,
           {
             y: 8,
-            filter: 'blur(3px)',
+            filter: "blur(3px)",
             opacity: 0,
           },
           {
             y: 0,
-            filter: 'blur(0px)',
+            filter: "blur(0px)",
             opacity: 1,
             duration: 0.75,
             delay: 0.15,
-            ease: 'power2.out',
-            clearProps: 'transform,filter,opacity',
-          }
+            ease: "power2.out",
+            clearProps: "transform,filter,opacity",
+          },
         );
       }
 
@@ -102,11 +104,11 @@ export default function HeroSection() {
         gsap.to(contentRef.current, {
           y: -65,
           opacity: 0.35,
-          ease: 'none',
+          ease: "none",
           scrollTrigger: {
             trigger: heroRef.current,
-            start: '25% top',
-            end: 'bottom top',
+            start: "25% top",
+            end: "bottom top",
             scrub: 1,
           },
         });
@@ -132,10 +134,10 @@ export default function HeroSection() {
           <i className="live-dot" aria-hidden="true" />
           <span>ENGINEER. WEB DEVELOPER. BUILDER.</span>
         </span>
-        <span>BASED IN INDIA · THINKING BEYOND</span>
+        <span>BASED IN INDIA &middot; THINKING BEYOND</span>
       </div>
 
-      {/* Portrait Backdrop matching exact Sarthak layout */}
+      {/* Portrait Backdrop matching exact layout */}
       <div
         id="hero-portrait-anchor"
         ref={portraitRef}
@@ -168,7 +170,7 @@ export default function HeroSection() {
       <div ref={contentRef} className="hero-content">
         {/* Kicker Tag with Signal Scramble */}
         <span className="hero-kicker">
-          <SignalText text="WELCOME TO MY WORLD · WEB DEVELOPER" />
+          <SignalText text="WELCOME TO MY WORLD &middot; WEB DEVELOPER" />
         </span>
 
         {/* Hero Headline with Masked Reveal */}
@@ -180,7 +182,7 @@ export default function HeroSection() {
           </span>
         </h1>
 
-        {/* Subtitle Description with Actions nested inside as per Sarthak markup */}
+        {/* Subtitle Description with Actions nested inside */}
         <div className="hero-description">
           <p ref={descRef}>
             I build products, teach developers,
@@ -213,9 +215,8 @@ export default function HeroSection() {
           <ArrowDown className="w-3.5 h-3.5" />
         </Link>
         <span>CRAFTING CODE &amp; EXPERIENCES FOR 4+ YEARS</span>
-        <span className="hero-edition">AN ONGOING EXPLORATION ↗</span>
+        <span className="hero-edition">AN ONGOING EXPLORATION &rarr; </span>
       </div>
-
-      </section>
+    </section>
   );
 }
