@@ -44,6 +44,11 @@
   box-sizing: border-box;
 }
 
+button, [role="button"], a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;

@@ -294,41 +294,50 @@ export default function ProjectsSection() {
       </div>
 
       {/* Filter Tabs Navigation */}
-      <div className="flex flex-wrap items-center gap-3 pb-12 border-b border-[var(--line)]/40">
+      <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pb-8 md:pb-12 border-b border-[var(--line)]/40 relative z-20">
         <button
+          type="button"
           onClick={() => setActiveTab('all')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer ${
+          className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer min-h-[42px] touch-manipulation select-none ${
             activeTab === 'all'
               ? 'bg-[var(--accent)] text-[#030303] font-semibold shadow-[0_0_15px_rgba(255,140,89,0.3)]'
-              : 'border border-[var(--line)]/60 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0]'
+              : 'border border-[var(--line)]/60 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0] active:scale-95'
           }`}
+          aria-pressed={activeTab === 'all'}
         >
-          <Layers className="w-3.5 h-3.5" />
-          <span>All Projects ({enterpriseProjects.length + personalProjects.length})</span>
+          <Layers className="w-3.5 h-3.5 shrink-0 pointer-events-none" />
+          <span className="pointer-events-none hidden sm:inline">All Projects ({enterpriseProjects.length + personalProjects.length})</span>
+          <span className="pointer-events-none sm:hidden">All ({enterpriseProjects.length + personalProjects.length})</span>
         </button>
 
         <button
+          type="button"
           onClick={() => setActiveTab('enterprise')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer ${
+          className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer min-h-[42px] touch-manipulation select-none ${
             activeTab === 'enterprise'
               ? 'bg-[var(--accent)] text-[#030303] font-semibold shadow-[0_0_15px_rgba(255,140,89,0.3)]'
-              : 'border border-[var(--line)]/60 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0]'
+              : 'border border-[var(--line)]/60 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0] active:scale-95'
           }`}
+          aria-pressed={activeTab === 'enterprise'}
         >
-          <Building2 className="w-3.5 h-3.5" />
-          <span>Enterprise &amp; SaaS Platforms ({enterpriseProjects.length})</span>
+          <Building2 className="w-3.5 h-3.5 shrink-0 pointer-events-none" />
+          <span className="pointer-events-none hidden sm:inline">Enterprise &amp; SaaS Platforms ({enterpriseProjects.length})</span>
+          <span className="pointer-events-none sm:hidden">Enterprise &amp; SaaS ({enterpriseProjects.length})</span>
         </button>
 
         <button
+          type="button"
           onClick={() => setActiveTab('personal')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer ${
+          className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer min-h-[42px] touch-manipulation select-none ${
             activeTab === 'personal'
               ? 'bg-[var(--accent)] text-[#030303] font-semibold shadow-[0_0_15px_rgba(255,140,89,0.3)]'
-              : 'border border-[var(--line)]/60 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0]'
+              : 'border border-[var(--line)]/60 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0] active:scale-95'
           }`}
+          aria-pressed={activeTab === 'personal'}
         >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Personal &amp; Internship Projects ({personalProjects.length})</span>
+          <Sparkles className="w-3.5 h-3.5 shrink-0 pointer-events-none" />
+          <span className="pointer-events-none hidden sm:inline">Personal &amp; Internship Projects ({personalProjects.length})</span>
+          <span className="pointer-events-none sm:hidden">Personal &amp; Web Apps ({personalProjects.length})</span>
         </button>
       </div>
 
