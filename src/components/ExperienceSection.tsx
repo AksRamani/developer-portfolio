@@ -48,9 +48,9 @@ const education = [
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="relative z-10 w-full bg-[#030303] py-28 md:py-36 px-6 md:px-12 border-t border-[var(--line)]/40">
+    <section id="experience" className="relative z-10 w-full bg-[#030303] py-20 sm:py-28 md:py-36 px-5 sm:px-8 md:px-12 border-t border-[var(--line)]/40">
       {/* Chapter Topline */}
-      <div className="flex items-center justify-between pb-14 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] border-b border-[var(--line)]/30">
+      <div className="flex items-center justify-between pb-10 sm:pb-14 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] border-b border-[var(--line)]/30">
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 bg-[var(--accent)] inline-block" />
           <span className="text-[var(--accent)] font-medium tracking-[0.16em]">
@@ -58,17 +58,17 @@ export default function ExperienceSection() {
           </span>
         </div>
         <span className="hidden sm:inline-block tracking-[0.18em]">
-          PROVEN TRACK RECORD & ACADEMIC CREDENTIALS
+          PROVEN TRACK RECORD &amp; ACADEMIC CREDENTIALS
         </span>
       </div>
 
-      <div className="pt-16 pb-16 max-w-3xl">
-        <h2 className="text-4xl sm:text-5xl lg:text-[54px] font-serif font-light text-[#f1eee8] leading-[1.08] tracking-[-0.035em]">
+      <div className="pt-10 sm:pt-14 md:pt-16 pb-10 sm:pb-14 md:pb-16 max-w-3xl">
+        <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-serif font-light text-[#f1eee8] leading-[1.12] sm:leading-[1.08] tracking-[-0.035em]">
           Started with code.
           <br />
           <em className="text-[#f1eee8] italic font-normal">Kept asking why.</em>
         </h2>
-        <p className="mt-4 text-[16px] text-[var(--muted)] leading-relaxed font-light">
+        <p className="mt-4 text-[15px] sm:text-[16px] text-[var(--muted)] leading-relaxed font-light">
           A timeline of professional engineering, commercial software delivery, and academic foundation.
         </p>
       </div>
@@ -76,26 +76,26 @@ export default function ExperienceSection() {
       {/* Professional Experience Rows */}
       <div className="divide-y divide-[var(--line)]/40 border-y border-[var(--line)]/40">
         {experiences.map((exp, idx) => (
-          <article key={idx} className="py-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-start group">
+          <article key={idx} className="py-7 sm:py-9 md:py-10 grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-6 items-start group">
             {/* Period */}
-            <div className="md:col-span-3 font-mono text-xs text-[var(--accent)] tracking-widest uppercase">
+            <div className="md:col-span-3 font-mono text-[11px] sm:text-xs text-[var(--accent)] tracking-widest uppercase">
               {exp.period}
             </div>
 
             {/* Role & Company */}
             <div className="md:col-span-4 space-y-1">
-              <h3 className="font-serif text-2xl text-[var(--ink)] font-normal group-hover:text-[#E5CBB0] transition-colors">
+              <h3 className="font-serif text-xl sm:text-2xl text-[var(--ink)] font-normal group-hover:text-[#E5CBB0] transition-colors leading-snug">
                 {exp.role}
               </h3>
-              <p className="text-xs font-mono text-[var(--muted)]">{exp.company}</p>
+              <p className="text-[11.5px] sm:text-xs font-mono text-[var(--muted)]">{exp.company}</p>
             </div>
 
             {/* Summary & Tech */}
-            <div className="md:col-span-5 space-y-3">
-              <p className="text-[14px] text-[var(--ink-muted)] leading-relaxed font-light">
+            <div className="md:col-span-5 space-y-2.5 sm:space-y-3 pt-1 md:pt-0">
+              <p className="text-[13.5px] sm:text-[14px] text-[var(--ink-muted)] leading-relaxed font-light">
                 {exp.summary}
               </p>
-              <p className="text-[11px] font-mono text-[#8a867f] uppercase tracking-wider">
+              <p className="text-[10.5px] sm:text-[11px] font-mono text-[#8a867f] uppercase tracking-wider">
                 {exp.tech}
               </p>
             </div>
@@ -104,27 +104,27 @@ export default function ExperienceSection() {
       </div>
 
       {/* Academic Credentials Section */}
-      <div className="pt-20">
-        <div className="flex items-center gap-3 text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] mb-10">
+      <div className="pt-14 sm:pt-20">
+        <div className="flex items-center gap-3 text-[9.5px] sm:text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] mb-6 sm:mb-10">
           <GraduationCap className="w-4 h-4 text-[var(--accent)]" />
           <span className="text-[var(--accent)] font-medium">ACADEMIC CREDENTIALS</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {education.map((edu, idx) => (
             <div
               key={idx}
-              className="p-8 rounded-2xl border border-[var(--line)]/50 bg-[#090807]/60 space-y-3 relative overflow-hidden"
+              className="p-5 sm:p-7 md:p-8 rounded-2xl border border-[var(--line)]/50 bg-[#090807]/60 space-y-2.5 sm:space-y-3 relative overflow-hidden"
             >
-              <div className="flex items-center justify-between text-xs font-mono text-[var(--accent)] uppercase tracking-wider">
+              <div className="flex items-center justify-between text-[11px] sm:text-xs font-mono text-[var(--accent)] uppercase tracking-wider">
                 <span>{edu.period}</span>
                 <span className="text-[#666]">GTU</span>
               </div>
-              <h4 className="font-serif text-2xl text-[#f1eee8] font-normal">
+              <h4 className="font-serif text-xl sm:text-2xl text-[#f1eee8] font-normal leading-snug">
                 {edu.degree}
               </h4>
-              <p className="text-xs font-mono text-[var(--muted)]">{edu.institution}</p>
-              <p className="text-[13px] text-[var(--ink-muted)] font-light leading-relaxed pt-2">
+              <p className="text-[11.5px] sm:text-xs font-mono text-[var(--muted)]">{edu.institution}</p>
+              <p className="text-[13px] text-[var(--ink-muted)] font-light leading-relaxed pt-1.5 sm:pt-2">
                 {edu.details}
               </p>
             </div>

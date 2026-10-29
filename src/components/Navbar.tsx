@@ -80,12 +80,12 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-4 left-0 right-0 z-50 px-4 md:px-8 pointer-events-none transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? "translate-y-0 opacity-100" : "-translate-y-28 opacity-0"}`}
+      className={`fixed top-3 sm:top-4 left-0 right-0 z-50 px-3 sm:px-4 md:px-8 pointer-events-none transition-all duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] ${visible ? "translate-y-0 opacity-100" : "-translate-y-28 opacity-0"}`}
     >
       <div className="max-w-[1120px] mx-auto pointer-events-auto">
         {/* Floating Capsule Bar */}
         <div
-          className={`flex items-center justify-between h-[68px] px-6 md:px-8 rounded-[22px] border transition-all duration-300 ${
+          className={`flex items-center justify-between h-[60px] sm:h-[68px] px-4 sm:px-6 md:px-8 rounded-[18px] sm:rounded-[22px] border transition-all duration-300 ${
             scrolled
               ? 'bg-[#121110]/95 backdrop-blur-2xl border-[#e7e1d5]/25 shadow-[0_16px_45px_rgba(0,0,0,0.65),inset_0_1px_0_rgba(255,255,255,0.12)]'
               : 'bg-[#141312]/85 backdrop-blur-xl border-[#e7e1d5]/15 shadow-[0_12px_36px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)]'
@@ -95,7 +95,7 @@ export default function Navbar() {
           <Link
             href="#top"
             onClick={() => setActiveSection('projects')}
-            className="group flex items-center gap-1.5 font-serif text-[23px] md:text-[26px] tracking-tight text-[#f1eee8] hover:text-[#E5CBB0] transition-colors select-none"
+            className="group flex items-center gap-1.5 font-serif text-[20px] sm:text-[23px] md:text-[26px] tracking-tight text-[#f1eee8] hover:text-[#E5CBB0] transition-colors select-none"
           >
             <span>Aakash</span> <span className="italic font-normal">Ramani</span>
           </Link>
@@ -142,7 +142,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-[#f1eee8] p-2 focus:outline-none cursor-pointer"
+            className="md:hidden text-[#f1eee8] p-2 focus:outline-none cursor-pointer touch-manipulation"
             aria-label="Toggle navigation menu"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -151,7 +151,7 @@ export default function Navbar() {
 
         {/* Mobile Dropdown Menu */}
         {mobileOpen && (
-          <div className="md:hidden mt-3 rounded-2xl bg-[#11100f]/95 backdrop-blur-2xl border border-[#e7e1d5]/20 p-6 flex flex-col gap-4 shadow-2xl">
+          <div className="md:hidden mt-2.5 rounded-2xl bg-[#11100f]/95 backdrop-blur-2xl border border-[#e7e1d5]/20 p-5 sm:p-6 flex flex-col gap-3 sm:gap-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
             {navItems.map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -162,7 +162,7 @@ export default function Navbar() {
                     setActiveSection(item.id);
                     setMobileOpen(false);
                   }}
-                  className={`font-serif text-2xl py-2 border-b border-[var(--line)]/40 flex items-center justify-between ${
+                  className={`font-serif text-xl sm:text-2xl py-2 border-b border-[var(--line)]/40 flex items-center justify-between ${
                     isActive ? 'text-[#ff8c59]' : 'text-[#f1eee8] hover:text-[#E5CBB0]'
                   }`}
                 >
@@ -179,7 +179,7 @@ export default function Navbar() {
             <Link
               href="#contact"
               onClick={() => setMobileOpen(false)}
-              className="nav-contact-mobile mt-2 flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff8c59] to-[#ff7536] text-[#030303] text-sm font-medium"
+              className="nav-contact-mobile mt-2 flex items-center justify-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff8c59] to-[#ff7536] text-[#030303] text-sm font-medium touch-manipulation cursor-pointer"
             >
               <span>Let&apos;s talk</span>
               <ArrowUpRight className="w-4 h-4" />

@@ -57,10 +57,17 @@ export default function TechnologiesSection() {
 
   const activeItem = expertiseItems.find((item) => item.id === expandedId) || expertiseItems[0];
 
+  const disciplineShortLabels: Record<number, string> = {
+    0: '01 Frontend',
+    1: '02 Full-Stack',
+    2: '03 UX & SEO',
+    3: '04 Vibe Coding',
+  };
+
   return (
-    <section id="disciplines" className="relative z-10 w-full bg-[#030303] py-28 md:py-36 px-6 md:px-12 border-t border-[var(--line)]/40">
+    <section id="disciplines" className="relative z-10 w-full bg-[#030303] py-20 sm:py-28 md:py-36 px-5 sm:px-8 md:px-12 border-t border-[var(--line)]/40">
       {/* Chapter Topline */}
-      <div className="flex items-center justify-between pb-14 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] border-b border-[var(--line)]/30">
+      <div className="flex items-center justify-between pb-10 sm:pb-14 text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#9d9d9d] border-b border-[var(--line)]/30">
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 bg-[#ff8c59] inline-block" />
           <span className="text-[#ff8c59] font-medium tracking-[0.16em]">
@@ -72,7 +79,7 @@ export default function TechnologiesSection() {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 pt-12 md:pt-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 pt-10 sm:pt-12 md:pt-16">
         {/* Left Column: Intro & Interactive Thinking Path */}
         <div className="lg:col-span-5 flex flex-col justify-between">
           <div>
@@ -85,11 +92,11 @@ export default function TechnologiesSection() {
               Choose a discipline. Follow the thinking.
             </p>
 
-            {/* Mobile Quick Discipline Selector Pills */}
-            <div className="mt-6 flex flex-wrap gap-2 lg:hidden">
+            {/* Mobile Quick Discipline Selector Pills - Balanced 2x2 Grid */}
+            <div className="mt-6 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap lg:hidden" role="group" aria-label="Select discipline">
               {expertiseItems.map((item) => {
                 const isSelected = expandedId === item.id;
-                const shortLabel = item.tag.replace(/^\d+\s*\/\s*/, '');
+                const label = disciplineShortLabels[item.id] || item.tag.replace(/^\d+\s*\/\s*/, '');
                 return (
                   <button
                     key={item.id}
@@ -101,13 +108,14 @@ export default function TechnologiesSection() {
                         targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                       }
                     }}
-                    className={`px-3 py-2 rounded-lg text-[10px] sm:text-xs font-mono tracking-wider transition-all cursor-pointer min-h-[38px] touch-manipulation select-none ${
+                    className={`flex items-center justify-center px-3 py-2.5 rounded-lg text-[11px] sm:text-xs font-mono tracking-wider transition-all cursor-pointer min-h-[40px] touch-manipulation select-none text-center ${
                       isSelected
-                        ? 'bg-[var(--accent)] text-[#030303] font-semibold shadow-[0_0_12px_rgba(255,140,89,0.35)]'
+                        ? 'bg-[var(--accent)] text-[#030303] font-semibold shadow-[0_0_14px_rgba(255,140,89,0.35)] scale-[1.02]'
                         : 'border border-[var(--line)]/50 text-[var(--muted)] hover:border-[#E5CBB0] hover:text-[#E5CBB0] bg-[#121110] active:scale-95'
                     }`}
+                    aria-pressed={isSelected}
                   >
-                    {shortLabel}
+                    <span>{label}</span>
                   </button>
                 );
               })}

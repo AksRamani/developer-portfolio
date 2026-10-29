@@ -190,14 +190,14 @@ export default function HeroSection() {
           </p>
 
           <div className="hero-actions">
-            <Link href="#work" className="pill-link">
+            <Link href="#projects" className="pill-link cursor-pointer touch-manipulation">
               <span>
                 <SignalText text="Explore my work" />
               </span>
               <ArrowDown className="w-3.5 h-3.5" />
             </Link>
 
-            <Link href="#contact" className="text-link">
+            <Link href="#contact" className="text-link cursor-pointer touch-manipulation">
               <span>
                 <SignalText text="Start a conversation" />
               </span>

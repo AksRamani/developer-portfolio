@@ -51,39 +51,48 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-28 px-6 md:px-12 max-w-[1400px] mx-auto">
+    <section id="contact" className="relative py-20 sm:py-28 px-5 sm:px-8 md:px-12 max-w-[1400px] mx-auto">
       {/* Section Header */}
-      <div className="flex items-center gap-4 text-[10px] tracking-[0.2em] font-mono uppercase text-[var(--muted)] mb-8">
-        <span className="text-[var(--accent)]">06 /</span>
+      <div className="flex items-center gap-3 sm:gap-4 text-[9px] sm:text-[10px] tracking-[0.2em] font-mono uppercase text-[var(--muted)] mb-8">
+        <span className="text-[var(--accent)] font-medium">06 /</span>
         <span>START A CONVERSATION</span>
         <div className="h-[1px] flex-1 bg-[var(--line)]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
         {/* Left Column: Context and Direct Links */}
         <div className="lg:col-span-5 flex flex-col justify-between">
           <div>
-            <h2 className="text-4xl md:text-5xl font-serif font-light text-[var(--ink)] leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-light text-[var(--ink)] leading-tight tracking-tight">
               Have an ambitious vision or challenging{' '}
               <em className="text-[var(--accent)] italic">technical problem</em>?
             </h2>
 
-            <p className="mt-6 text-[15px] md:text-[16px] text-[var(--ink-muted)] leading-relaxed font-light">
+            <p className="mt-4 sm:mt-6 text-[14.5px] sm:text-[15px] md:text-[16px] text-[var(--ink-muted)] leading-relaxed font-light">
               I am always eager to discuss distributed system design, high-performance web products,
               advisory roles, or selected engineering contracts.
             </p>
 
-            <div className="mt-10 space-y-4">
+            <div className="mt-8 sm:mt-10 space-y-4">
               <div className="flex items-center gap-3">
                 <span className="live-dot" />
-                <span className="text-xs font-mono tracking-wider text-[var(--ink)] uppercase">
+                <span className="text-[11px] sm:text-xs font-mono tracking-wider text-[var(--ink)] uppercase">
                   CURRENT AVAILABILITY: OPEN FOR NEW OPPORTUNITIES
                 </span>
               </div>
 
-              <div className="p-4 rounded-xl border border-[var(--surface-border)] bg-[var(--surface)] text-xs font-mono text-[var(--muted)] space-y-2">
+              <div className="p-4 sm:p-5 rounded-xl border border-[var(--surface-border)] bg-[var(--surface)] text-[11px] sm:text-xs font-mono text-[var(--muted)] space-y-2.5">
+                <p className="break-all sm:break-normal">
+                  <strong className="text-[var(--ink)]">DIRECT EMAIL:</strong>{' '}
+                  <a href="mailto:aakash.ramani021@gmail.com" className="text-[var(--accent)] hover:underline">
+                    aakash.ramani021@gmail.com
+                  </a>
+                </p>
                 <p>
-                  <strong className="text-[var(--ink)]">DIRECT EMAIL:</strong> <a href="mailto:aakash.ramani021@gmail.com" className="text-[var(--accent)] hover:underline">aakash.ramani021@gmail.com</a></p><p><strong className="text-[var(--ink)]">PHONE:</strong> <a href="tel:+919725808487" className="text-[var(--accent)] hover:underline">+91 9725808487</a>
+                  <strong className="text-[var(--ink)]">PHONE:</strong>{' '}
+                  <a href="tel:+919725808487" className="text-[var(--accent)] hover:underline">
+                    +91 9725808487
+                  </a>
                 </p>
                 <p>
                   <strong className="text-[var(--ink)]">TIMEZONE:</strong> Ahmedabad / Rajkot, Gujarat (IST UTC+5:30)
@@ -96,7 +105,7 @@ export default function ContactSection() {
           </div>
 
           {/* Social Links */}
-          <div className="mt-12 flex flex-wrap gap-4 pt-6 border-t border-[var(--line)]">
+          <div className="mt-8 sm:mt-12 flex flex-wrap gap-4 pt-6 border-t border-[var(--line)]">
             <a
               href="https://github.com"
               target="_blank"
@@ -129,16 +138,16 @@ export default function ContactSection() {
 
         {/* Right Column: Interactive Form */}
         <div className="lg:col-span-7">
-          <div className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-8 md:p-10 shadow-2xl">
-            <h3 className="text-2xl font-serif text-[var(--ink)] font-normal mb-2">
+          <div className="rounded-2xl border border-[var(--surface-border)] bg-[var(--surface)] p-5 sm:p-7 md:p-10 shadow-2xl">
+            <h3 className="text-xl sm:text-2xl font-serif text-[var(--ink)] font-normal mb-1.5">
               Send a Transmission
             </h3>
-            <p className="text-xs font-mono text-[var(--muted)] mb-8">
+            <p className="text-[11px] sm:text-xs font-mono text-[var(--muted)] mb-6 sm:mb-8">
               Fill out the details below to initiate contact.
             </p>
 
             {status === 'success' ? (
-              <div className="p-8 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-center space-y-3">
+              <div className="p-6 sm:p-8 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
                 <h4 className="text-lg font-serif text-[var(--ink)]">Message Transmitted Successfully</h4>
                 <p className="text-xs font-mono text-emerald-300">
@@ -146,12 +155,12 @@ export default function ContactSection() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label
                       htmlFor="name"
-                      className="block text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2"
+                      className="block text-[10.5px] sm:text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2 font-medium"
                     >
                       Your Name *
                     </label>
@@ -162,14 +171,14 @@ export default function ContactSection() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Jane Doe"
-                      className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors"
+                      className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-3.5 sm:px-4 py-2.5 sm:py-3 text-[15px] sm:text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2"
+                      className="block text-[10.5px] sm:text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2 font-medium"
                     >
                       Email Address *
                     </label>
@@ -180,7 +189,7 @@ export default function ContactSection() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="jane@company.com"
-                      className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors"
+                      className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-3.5 sm:px-4 py-2.5 sm:py-3 text-[15px] sm:text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -188,7 +197,7 @@ export default function ContactSection() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2"
+                    className="block text-[10.5px] sm:text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2 font-medium"
                   >
                     Project Type or Subject
                   </label>
@@ -198,14 +207,14 @@ export default function ContactSection() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="Architecture Consultation / Senior Engineering Role"
-                    className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors"
+                    className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-3.5 sm:px-4 py-2.5 sm:py-3 text-[15px] sm:text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors"
                   />
                 </div>
 
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2"
+                    className="block text-[10.5px] sm:text-[11px] font-mono uppercase tracking-wider text-[var(--muted)] mb-2 font-medium"
                   >
                     Message / Project Scope *
                   </label>
@@ -216,14 +225,14 @@ export default function ContactSection() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell me about your product, timeline, architecture requirements, or objectives..."
-                    className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-4 py-3 text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors resize-none"
+                    className="w-full bg-[#11100f] border border-[var(--surface-border)] focus:border-[var(--accent)] rounded-lg px-3.5 sm:px-4 py-2.5 sm:py-3 text-[15px] sm:text-sm text-[var(--ink)] placeholder:text-[#555] focus:outline-none transition-colors resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="pill-link w-full justify-center py-4 text-xs font-semibold"
+                  className="pill-link w-full justify-center py-3.5 sm:py-4 text-xs font-semibold cursor-pointer"
                 >
                   {status === 'submitting' ? (
                     <span>Encrypting &amp; Sending...</span>

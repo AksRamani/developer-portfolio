@@ -8,52 +8,52 @@ export default function ProofStrip() {
   return (
     <section
       aria-label="Career highlights"
-      className="relative z-10 w-full border-y border-[var(--line)]/40 bg-[#050505] py-8 md:py-10 px-6 md:px-12 shadow-[0_-25px_60px_#030303]"
+      className="relative z-10 w-full border-y border-[var(--line)]/40 bg-[#050505] py-7 sm:py-9 md:py-10 px-5 sm:px-8 md:px-12 shadow-[0_-25px_60px_#030303]"
     >
-      <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 items-center">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-8 items-center">
         <div>
-          <strong className="text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
+          <strong className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
             4<span className="text-[var(--accent)] font-light">+</span>
           </strong>
-          <p className="mt-1 text-xs font-mono text-[#8f8c85]">
+          <p className="mt-1 text-[11px] sm:text-xs font-mono text-[#8f8c85] leading-snug">
             years building responsive web apps
           </p>
         </div>
 
         <div>
-          <strong className="text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
+          <strong className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
             20<span className="text-[var(--accent)] font-light">+</span>
           </strong>
-          <p className="mt-1 text-xs font-mono text-[#8f8c85]">
-            production web projects & tools
+          <p className="mt-1 text-[11px] sm:text-xs font-mono text-[#8f8c85] leading-snug">
+            production web projects &amp; tools
           </p>
         </div>
 
         <div>
-          <strong className="text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
+          <strong className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
             100<span className="text-[var(--accent)] font-light">%</span>
           </strong>
-          <p className="mt-1 text-xs font-mono text-[#8f8c85]">
-            client satisfaction & delivery rate
+          <p className="mt-1 text-[11px] sm:text-xs font-mono text-[#8f8c85] leading-snug">
+            client satisfaction &amp; delivery rate
           </p>
         </div>
 
         <div>
-          <strong className="text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
+          <strong className="text-2xl sm:text-3xl md:text-4xl font-serif font-normal text-[#f1eee8] tracking-tight">
             10<span className="text-[var(--accent)] font-light">+</span>
           </strong>
-          <p className="mt-1 text-xs font-mono text-[#8f8c85]">
-            modern frameworks & tools mastered
+          <p className="mt-1 text-[11px] sm:text-xs font-mono text-[#8f8c85] leading-snug">
+            modern frameworks &amp; tools mastered
           </p>
         </div>
 
-        <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:text-right pt-2 lg:pt-0">
+        <div className="col-span-2 md:col-span-4 lg:col-span-1 lg:text-right pt-2 lg:pt-0 border-t border-[var(--line)]/30 lg:border-t-0">
           <Link
             href="#projects"
-            className="group inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--accent)] hover:text-[#E5CBB0] transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-[9.5px] sm:text-[10px] tracking-[0.16em] sm:tracking-[0.2em] uppercase text-[var(--accent)] hover:text-[#E5CBB0] transition-colors"
           >
-            <span>THE WORK.<br />REAL-WORLD WEB IMPACT.</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span>THE WORK.<br className="hidden sm:inline" /> REAL-WORLD WEB IMPACT.</span>
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
           </Link>
         </div>
       </div>
