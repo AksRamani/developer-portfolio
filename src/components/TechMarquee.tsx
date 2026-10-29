@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Sparkles, Terminal, Cpu } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Sparkles, Terminal, Cpu, Orbit, Rows3, CircleDot } from 'lucide-react';
 import SignalText from './SignalText';
 
 interface TechItem {
@@ -395,8 +395,650 @@ function MarqueeRow({
   );
 }
 
+/* ────────────────────────────────────────────────────────────────────────────
+   GALAXY COSMIC BACKGROUND: Interactive Starfield & Meteor Canvas
+   Twinkling stars with 3D parallax depth, cursor constellation linkages,
+   and atmospheric shooting meteors.
+   ──────────────────────────────────────────────────────────────────────────── */
+interface CosmicStar {
+  x: number;
+  y: number;
+  size: number;
+  baseAlpha: number;
+  alpha: number;
+  twinkleSpeed: number;
+  twinklePhase: number;
+  color: string;
+  glowColor: string;
+  depth: number;
+  isMajor: boolean;
+}
+
+interface CosmicMeteor {
+  x: number;
+  y: number;
+  len: number;
+  speed: number;
+  alpha: number;
+  active: boolean;
+}
+
+function GalaxyCosmicCanvas({
+  motionEnabled,
+  mouseCoordRef,
+}: {
+  motionEnabled: boolean;
+  mouseCoordRef: React.RefObject<{
+    x: number;
+    y: number;
+    relX: number;
+    relY: number;
+    active: boolean;
+  }>;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animFrameRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas || !canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    // Natural astronomical color palette: blue-white, diamond white, warm amber, gold, lilac
+    const starPalette = [
+      { core: '#ffffff', glow: 'rgba(255, 255, 255, 0.8)' },
+      { core: '#e0f2fe', glow: 'rgba(125, 211, 252, 0.75)' },
+      { core: '#fff7ed', glow: 'rgba(255, 237, 213, 0.8)' },
+      { core: '#ff8c59', glow: 'rgba(255, 140, 89, 0.85)' },
+      { core: '#fde68a', glow: 'rgba(253, 230, 138, 0.75)' },
+      { core: '#f5d0fe', glow: 'rgba(233, 213, 255, 0.7)' },
+    ];
+
+    // Rich star population: 280 on desktop, 140 on mobile for true galaxy density
+    const starCount = width < 768 ? 140 : 280;
+
+    const stars: CosmicStar[] = Array.from({ length: starCount }, (_, i) => {
+      const palette = starPalette[Math.floor(Math.random() * starPalette.length)];
+      // 12% major landmark stars, 38% mid stars, 50% micro galactic stardust
+      const isMajor = i < starCount * 0.12;
+      const isMid = !isMajor && i < starCount * 0.5;
+
+      const size = isMajor
+        ? Math.random() * 1.0 + 1.8 // 1.8 - 2.8px
+        : isMid
+        ? Math.random() * 0.7 + 1.0 // 1.0 - 1.7px
+        : Math.random() * 0.5 + 0.4; // 0.4 - 0.9px (micro stardust)
+
+      return {
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size,
+        baseAlpha: isMajor ? Math.random() * 0.3 + 0.65 : Math.random() * 0.5 + 0.25,
+        alpha: Math.random() * 0.6 + 0.3,
+        twinkleSpeed: Math.random() * 0.028 + 0.008,
+        twinklePhase: Math.random() * Math.PI * 2,
+        color: palette.core,
+        glowColor: palette.glow,
+        depth: isMajor ? Math.random() * 0.4 + 0.7 : Math.random() * 0.7 + 0.2,
+        isMajor,
+      };
+    });
+
+    let meteor: CosmicMeteor = {
+      x: 0,
+      y: 0,
+      len: 0,
+      speed: 0,
+      alpha: 0,
+      active: false,
+    };
+    let meteorCooldown = 150;
+
+    let currentParallax = { x: 0, y: 0 };
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      const coords = mouseCoordRef.current;
+      const mouseX = coords?.x ?? 0;
+      const mouseY = coords?.y ?? 0;
+      const mouseActive = Boolean(coords?.active);
+      const targetParallaxX = (coords?.relX ?? 0) * 45;
+      const targetParallaxY = (coords?.relY ?? 0) * 45;
+
+      currentParallax.x += (targetParallaxX - currentParallax.x) * 0.05;
+      currentParallax.y += (targetParallaxY - currentParallax.y) * 0.05;
+
+      // Spiderweb Constellation Effect: Dynamic starlight threads connecting stars & cursor
+      if (mouseActive) {
+        for (let i = 0; i < stars.length; i++) {
+          const s1 = stars[i];
+          const s1X = s1.x - currentParallax.x * s1.depth;
+          const s1Y = s1.y - currentParallax.y * s1.depth;
+          const distToMouse = Math.hypot(mouseX - s1X, mouseY - s1Y);
+
+          if (distToMouse < 135) {
+            // Fine thread from cursor to star
+            const lineAlpha = (1 - distToMouse / 135) * 0.28;
+            ctx.beginPath();
+            ctx.moveTo(mouseX, mouseY);
+            ctx.lineTo(s1X, s1Y);
+            ctx.strokeStyle = `rgba(255, 140, 89, ${lineAlpha})`;
+            ctx.lineWidth = 0.65;
+            ctx.stroke();
+
+            // Connect nearby stars together into constellation spiderwebs
+            for (let j = i + 1; j < stars.length; j++) {
+              const s2 = stars[j];
+              const s2X = s2.x - currentParallax.x * s2.depth;
+              const s2Y = s2.y - currentParallax.y * s2.depth;
+              const distBetween = Math.hypot(s1X - s2X, s1Y - s2Y);
+
+              if (distBetween < 80) {
+                const connAlpha = (1 - distBetween / 80) * 0.22;
+                ctx.beginPath();
+                ctx.moveTo(s1X, s1Y);
+                ctx.lineTo(s2X, s2Y);
+                ctx.strokeStyle = `rgba(229, 203, 176, ${connAlpha})`;
+                ctx.lineWidth = 0.55;
+                ctx.stroke();
+              }
+            }
+          }
+        }
+      }
+
+      // Draw Galaxy Stars with Realistic Atmospheric Glow
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i];
+
+        if (motionEnabled) {
+          star.twinklePhase += star.twinkleSpeed;
+          star.alpha = star.baseAlpha + Math.sin(star.twinklePhase) * 0.35;
+        }
+
+        const renderAlpha = Math.max(0.12, Math.min(1, star.alpha));
+        const px = star.x - currentParallax.x * star.depth;
+        const py = star.y - currentParallax.y * star.depth;
+
+        // 1. Realistic Radial Corona Glow for Major & Medium Stars
+        if (star.size >= 1.0) {
+          const glowRadius = star.size * (star.isMajor ? 4.2 : 2.8);
+          const glow = ctx.createRadialGradient(px, py, 0, px, py, glowRadius);
+          glow.addColorStop(0, star.glowColor);
+          glow.addColorStop(0.35, star.glowColor.replace('0.85', '0.3').replace('0.8', '0.25').replace('0.75', '0.2').replace('0.7', '0.2'));
+          glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+          ctx.beginPath();
+          ctx.arc(px, py, glowRadius, 0, Math.PI * 2);
+          ctx.fillStyle = glow;
+          ctx.globalAlpha = renderAlpha * 0.65;
+          ctx.fill();
+        }
+
+        // 2. Optical 4-Point Diffraction Spike Shimmer on Major Stars
+        if (star.isMajor && renderAlpha > 0.45) {
+          const spikeLen = star.size * 3.8;
+          ctx.beginPath();
+          ctx.moveTo(px - spikeLen, py);
+          ctx.lineTo(px + spikeLen, py);
+          ctx.moveTo(px, py - spikeLen);
+          ctx.lineTo(px, py + spikeLen);
+          ctx.strokeStyle = star.color;
+          ctx.lineWidth = 0.55;
+          ctx.globalAlpha = renderAlpha * 0.35;
+          ctx.stroke();
+        }
+
+        // 3. Stellar White-Hot Core
+        ctx.beginPath();
+        ctx.arc(px, py, star.size, 0, Math.PI * 2);
+        ctx.fillStyle = star.color;
+        ctx.globalAlpha = renderAlpha;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Shooting Meteor with Atmospheric Ionization Trail
+      if (motionEnabled) {
+        if (!meteor.active) {
+          meteorCooldown--;
+          if (meteorCooldown <= 0 && Math.random() < 0.025) {
+            meteor.active = true;
+            meteor.x = Math.random() * width * 0.7;
+            meteor.y = Math.random() * height * 0.35;
+            meteor.len = Math.random() * 85 + 65;
+            meteor.speed = Math.random() * 7 + 9;
+            meteor.alpha = 1;
+            meteorCooldown = Math.floor(Math.random() * 320 + 200);
+          }
+        } else {
+          meteor.x += meteor.speed;
+          meteor.y += meteor.speed * 0.55;
+          meteor.alpha -= 0.018;
+
+          if (meteor.alpha <= 0 || meteor.x > width || meteor.y > height) {
+            meteor.active = false;
+          } else {
+            const grad = ctx.createLinearGradient(
+              meteor.x,
+              meteor.y,
+              meteor.x - meteor.len,
+              meteor.y - meteor.len * 0.55
+            );
+            grad.addColorStop(0, `rgba(255, 255, 255, ${meteor.alpha})`);
+            grad.addColorStop(0.25, `rgba(255, 140, 89, ${meteor.alpha * 0.9})`);
+            grad.addColorStop(1, 'rgba(255, 140, 89, 0)');
+
+            ctx.beginPath();
+            ctx.moveTo(meteor.x, meteor.y);
+            ctx.lineTo(meteor.x - meteor.len, meteor.y - meteor.len * 0.55);
+            ctx.strokeStyle = grad;
+            ctx.lineWidth = 1.3;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animFrameRef.current = requestAnimationFrame(render);
+    };
+
+    animFrameRef.current = requestAnimationFrame(render);
+
+    return () => {
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [motionEnabled, mouseCoordRef]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute inset-0 w-full h-full z-0 opacity-85"
+      aria-hidden="true"
+    />
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+   CONCENTRIC ORBIT VIEW: 3 Pure Concentric Layers (Celestial Orbital Rings)
+   Outer Layer 3: Frontend & Design Systems (Ring 3)
+   Middle Layer 2: Backend & CMS Solutions (Ring 2)
+   Inner Layer 1: Vibe Coding & AI Tools (Ring 1)
+   ──────────────────────────────────────────────────────────────────────────── */
+function ConcentricCircleLayers({
+  layer1,
+  layer2,
+  layer3,
+  motionEnabled,
+}: {
+  layer1: TechItem[];
+  layer2: TechItem[];
+  layer3: TechItem[];
+  motionEnabled: boolean;
+}) {
+  const [activeItem, setActiveItem] = useState<TechItem | null>(null);
+
+  // Compact Concentric Radii (Refined proportions, reduced radius)
+  const R1 = 95;  // Inner ring (190px diameter)
+  const R2 = 155; // Middle ring (310px diameter)
+  const R3 = 215; // Outer ring (430px diameter)
+
+  const isLayer3Active = layer3.some((t) => t.name === activeItem?.name);
+  const isLayer2Active = layer2.some((t) => t.name === activeItem?.name);
+  const isLayer1Active = layer1.some((t) => t.name === activeItem?.name);
+
+  return (
+    <div className="relative w-full pt-16 sm:pt-20 md:pt-24 pb-14 sm:pb-16 flex flex-col items-center justify-center select-none overflow-visible animate-in fade-in zoom-in-95 duration-500">
+      {/* Responsive Orbital Viewport Container with Interactive 3D Parallax Tilt */}
+      <div
+        className="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] md:w-[500px] md:h-[500px] flex items-center justify-center overflow-visible will-change-transform"
+        style={{
+          transform:
+            'perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translate3d(var(--tilt-shift-x, 0px), var(--tilt-shift-y, 0px), 0)',
+          transition: 'transform 0.15s ease-out',
+        }}
+      >
+        {/* Scaling Transform Wrapper */}
+        <div className="absolute inset-0 flex items-center justify-center scale-[0.62] sm:scale-[0.82] md:scale-100 origin-center transition-transform duration-500 overflow-visible">
+          {/* Layer 3: Outer Circular Ring Track (Frontend Core) */}
+          <div
+            className={`orbit-layer-ring absolute w-[430px] h-[430px] rounded-full border border-white/15 border-dashed pointer-events-auto transition-colors duration-300 hover:border-white/35 ${
+              motionEnabled ? 'animate-orbit-layer-3' : 'orbit-layer-paused'
+            }`}
+            style={{ zIndex: isLayer3Active ? 50 : 10 }}
+          >
+            {/* Nodes on Layer 3 */}
+            {layer3.map((tech, i) => {
+              const angle = (i * 360) / layer3.length;
+              const rad = (angle * Math.PI) / 180;
+              const x = R3 * Math.cos(rad);
+              const y = R3 * Math.sin(rad);
+              const isNodeActive = activeItem?.name === tech.name;
+              const opensDownward = y < -20;
+
+              return (
+                <div
+                  key={`l3-${tech.name}`}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto group"
+                  style={{
+                    left: `calc(50% + ${x}px)`,
+                    top: `calc(50% + ${y}px)`,
+                    zIndex: isNodeActive ? 80 : 20,
+                  }}
+                  onMouseEnter={() => setActiveItem(tech)}
+                  onMouseLeave={() => setActiveItem(null)}
+                  onClick={() => setActiveItem(tech)}
+                >
+                  <div
+                    className={`orbit-node-inner ${
+                      motionEnabled ? 'animate-counter-layer-3' : ''
+                    } relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-white/15 bg-[#0e0c0a]/95 backdrop-blur-xl hover:border-[var(--accent)] hover:bg-[#1a1410] hover:scale-120 hover:shadow-[0_0_20px_rgba(255,140,89,0.45)] transition-all duration-300 cursor-pointer shadow-lg`}
+                  >
+                    <div
+                      className="w-4.5 h-4.5 sm:w-5 sm:h-5 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+                      style={{ color: tech.color }}
+                    >
+                      {tech.svg}
+                    </div>
+
+                    {/* Editorial Themed Floating Tooltip (Dynamic inward placement & top z-index) */}
+                    <div
+                      className={`pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-90 group-hover:scale-100 z-[100] flex flex-col items-center ${
+                        opensDownward ? 'top-full mt-2.5' : 'bottom-full mb-2.5'
+                      }`}
+                    >
+                      <div className="relative px-3 py-1.5 rounded-xl border border-[var(--accent)]/50 bg-[#120f0d]/98 backdrop-blur-2xl shadow-[0_12px_36px_rgba(0,0,0,0.95),0_0_25px_rgba(255,140,89,0.25)] whitespace-nowrap flex flex-col items-center text-center gap-0.5">
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full shrink-0 shadow-[0_0_6px_currentColor]"
+                            style={{ backgroundColor: tech.color, color: tech.color }}
+                          />
+                          <span className="text-[11.5px] font-sans font-medium text-[#f1eee8] tracking-tight">
+                            {tech.name}
+                          </span>
+                          {tech.badge && (
+                            <span className="px-1.5 py-0.2 rounded text-[7px] font-mono uppercase tracking-wider bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--accent)]/30 font-medium">
+                              {tech.badge}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[8px] font-mono uppercase tracking-[0.14em] text-[var(--muted)]">
+                          {tech.category}
+                        </span>
+                        {/* Tooltip Caret Pointer */}
+                        {opensDownward ? (
+                          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-l border-t border-[var(--accent)]/50 bg-[#120f0d]" />
+                        ) : (
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-r border-b border-[var(--accent)]/50 bg-[#120f0d]" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Layer 2: Middle Circular Ring Track (Backend & CMS) */}
+          <div
+            className={`orbit-layer-ring absolute w-[310px] h-[310px] rounded-full border border-sky-500/25 pointer-events-auto transition-colors duration-300 hover:border-sky-400/50 ${
+              motionEnabled ? 'animate-orbit-layer-2' : 'orbit-layer-paused'
+            }`}
+            style={{ zIndex: isLayer2Active ? 50 : 10 }}
+          >
+            {/* Nodes on Layer 2 */}
+            {layer2.map((tech, i) => {
+              const angle = (i * 360) / layer2.length;
+              const rad = (angle * Math.PI) / 180;
+              const x = R2 * Math.cos(rad);
+              const y = R2 * Math.sin(rad);
+              const isNodeActive = activeItem?.name === tech.name;
+              const opensDownward = y < -20;
+
+              return (
+                <div
+                  key={`l2-${tech.name}`}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto group"
+                  style={{
+                    left: `calc(50% + ${x}px)`,
+                    top: `calc(50% + ${y}px)`,
+                    zIndex: isNodeActive ? 80 : 20,
+                  }}
+                  onMouseEnter={() => setActiveItem(tech)}
+                  onMouseLeave={() => setActiveItem(null)}
+                  onClick={() => setActiveItem(tech)}
+                >
+                  <div
+                    className={`orbit-node-inner ${
+                      motionEnabled ? 'animate-counter-layer-2' : ''
+                    } relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-sky-500/25 bg-[#0a0e14]/95 backdrop-blur-xl hover:border-sky-400 hover:bg-[#0e1724] hover:scale-120 hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300 cursor-pointer shadow-lg`}
+                  >
+                    <div
+                      className="w-4.5 h-4.5 sm:w-5 sm:h-5 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+                      style={{ color: tech.color }}
+                    >
+                      {tech.svg}
+                    </div>
+
+                    {/* Editorial Themed Floating Tooltip */}
+                    <div
+                      className={`pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-90 group-hover:scale-100 z-[100] flex flex-col items-center ${
+                        opensDownward ? 'top-full mt-2.5' : 'bottom-full mb-2.5'
+                      }`}
+                    >
+                      <div className="relative px-3 py-1.5 rounded-xl border border-sky-400/50 bg-[#0a0e14]/98 backdrop-blur-2xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(56,189,248,0.25)] whitespace-nowrap flex flex-col items-center text-center gap-0.5">
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full shrink-0 shadow-[0_0_6px_currentColor]"
+                            style={{ backgroundColor: tech.color, color: tech.color }}
+                          />
+                          <span className="text-[11.5px] font-sans font-medium text-[#f1eee8] tracking-tight">
+                            {tech.name}
+                          </span>
+                          {tech.badge && (
+                            <span className="px-1.5 py-0.2 rounded text-[7px] font-mono uppercase tracking-wider bg-sky-500/15 text-sky-300 border border-sky-500/30">
+                              {tech.badge}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[8px] font-mono uppercase tracking-[0.14em] text-[var(--muted)]">
+                          {tech.category}
+                        </span>
+                        {/* Tooltip Caret Pointer */}
+                        {opensDownward ? (
+                          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-l border-t border-sky-400/50 bg-[#0a0e14]" />
+                        ) : (
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-r border-b border-sky-400/50 bg-[#0a0e14]" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Layer 1: Inner Circular Ring Track (AI & Vibe Coding) */}
+          <div
+            className={`orbit-layer-ring absolute w-[190px] h-[190px] rounded-full border border-[var(--accent)]/40 shadow-[0_0_30px_rgba(255,140,89,0.15)] pointer-events-auto transition-colors duration-300 hover:border-[var(--accent)]/70 ${
+              motionEnabled ? 'animate-orbit-layer-1' : 'orbit-layer-paused'
+            }`}
+            style={{ zIndex: isLayer1Active ? 50 : 10 }}
+          >
+            {/* Nodes on Layer 1 */}
+            {layer1.map((tech, i) => {
+              const angle = (i * 360) / layer1.length;
+              const rad = (angle * Math.PI) / 180;
+              const x = R1 * Math.cos(rad);
+              const y = R1 * Math.sin(rad);
+              const isNodeActive = activeItem?.name === tech.name;
+              const opensDownward = y < -20;
+
+              return (
+                <div
+                  key={`l1-${tech.name}`}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto group"
+                  style={{
+                    left: `calc(50% + ${x}px)`,
+                    top: `calc(50% + ${y}px)`,
+                    zIndex: isNodeActive ? 80 : 20,
+                  }}
+                  onMouseEnter={() => setActiveItem(tech)}
+                  onMouseLeave={() => setActiveItem(null)}
+                  onClick={() => setActiveItem(tech)}
+                >
+                  <div
+                    className={`orbit-node-inner ${
+                      motionEnabled ? 'animate-counter-layer-1' : ''
+                    } relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[var(--accent)]/40 bg-[#16100c]/95 backdrop-blur-xl hover:border-[var(--accent)] hover:bg-[#20150e] hover:scale-120 hover:shadow-[0_0_20px_rgba(255,140,89,0.5)] transition-all duration-300 cursor-pointer shadow-lg`}
+                  >
+                    <div
+                      className="w-4.5 h-4.5 sm:w-5 sm:h-5 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
+                      style={{ color: tech.color }}
+                    >
+                      {tech.svg}
+                    </div>
+
+                    {/* Editorial Themed Floating Tooltip */}
+                    <div
+                      className={`pointer-events-none absolute left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-90 group-hover:scale-100 z-[100] flex flex-col items-center ${
+                        opensDownward ? 'top-full mt-2.5' : 'bottom-full mb-2.5'
+                      }`}
+                    >
+                      <div className="relative px-3 py-1.5 rounded-xl border border-[var(--accent)]/60 bg-[#16100c]/98 backdrop-blur-2xl shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_25px_rgba(255,140,89,0.3)] whitespace-nowrap flex flex-col items-center text-center gap-0.5">
+                        <div className="flex items-center gap-1.5">
+                          <span
+                            className="w-1.5 h-1.5 rounded-full shrink-0 shadow-[0_0_6px_currentColor]"
+                            style={{ backgroundColor: tech.color, color: tech.color }}
+                          />
+                          <span className="text-[11.5px] font-sans font-medium text-[#f1eee8] tracking-tight">
+                            {tech.name}
+                          </span>
+                          {tech.badge && (
+                            <span className="px-1.5 py-0.2 rounded text-[7px] font-mono uppercase tracking-wider bg-[var(--accent)]/15 text-[var(--accent)] border border-[var(--accent)]/30 font-medium">
+                              {tech.badge}
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[8px] font-mono uppercase tracking-[0.14em] text-[var(--muted)]">
+                          {tech.category}
+                        </span>
+                        {/* Tooltip Caret Pointer */}
+                        {opensDownward ? (
+                          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-l border-t border-[var(--accent)]/60 bg-[#16100c]" />
+                        ) : (
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-r border-b border-[var(--accent)]/60 bg-[#16100c]" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Central Nucleus Core */}
+          <div
+            className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border border-[var(--accent)]/50 bg-[#100d0b] backdrop-blur-xl flex flex-col items-center justify-center text-center p-2 shadow-[0_0_30px_rgba(255,140,89,0.25)] transition-all duration-300 pointer-events-auto"
+            style={{ zIndex: 10 }}
+          >
+            {activeItem ? (
+              <div className="flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-200">
+                <div
+                  className="w-5 h-5 flex items-center justify-center"
+                  style={{ color: activeItem.color }}
+                >
+                  {activeItem.svg}
+                </div>
+                <span className="text-[9px] font-sans font-medium text-[#f1eee8] mt-0.5 truncate max-w-[65px]">
+                  {activeItem.name}
+                </span>
+                <span className="text-[7px] font-mono text-[var(--accent)] tracking-widest uppercase">
+                  INSPECTED
+                </span>
+              </div>
+            ) : (
+              <>
+                <Cpu className="w-5 h-5 text-[var(--accent)] animate-pulse" />
+                <span className="text-[7.5px] font-mono uppercase tracking-[0.2em] text-[#ff8c59] font-semibold mt-1">
+                  ARSENAL
+                </span>
+                <span className="text-[6.5px] font-mono text-[#8a857e] tracking-wider uppercase">
+                  SYSTEM
+                </span>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function TechMarquee() {
   const [motionEnabled, setMotionEnabled] = useState(true);
+  const [viewMode, setViewMode] = useState<'lines' | 'orbit'>('orbit');
+  const sectionRef = useRef<HTMLElement>(null);
+  const mouseCoordRef = useRef<{
+    x: number;
+    y: number;
+    relX: number;
+    relY: number;
+    active: boolean;
+  }>({
+    x: 0,
+    y: 0,
+    relX: 0,
+    relY: 0,
+    active: false,
+  });
+
+  const handleSectionMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const relX = (x / rect.width - 0.5) * 2;
+    const relY = (y / rect.height - 0.5) * 2;
+
+    mouseCoordRef.current.x = x;
+    mouseCoordRef.current.y = y;
+    mouseCoordRef.current.relX = relX;
+    mouseCoordRef.current.relY = relY;
+    mouseCoordRef.current.active = true;
+
+    if (viewMode === 'orbit') {
+      sectionRef.current.style.setProperty('--tilt-x', `${(relY * -7).toFixed(2)}deg`);
+      sectionRef.current.style.setProperty('--tilt-y', `${(relX * 7).toFixed(2)}deg`);
+      sectionRef.current.style.setProperty('--tilt-shift-x', `${(relX * 12).toFixed(1)}px`);
+      sectionRef.current.style.setProperty('--tilt-shift-y', `${(relY * 12).toFixed(1)}px`);
+    }
+  };
+
+  const handleSectionMouseLeave = () => {
+    mouseCoordRef.current.active = false;
+    mouseCoordRef.current.relX = 0;
+    mouseCoordRef.current.relY = 0;
+
+    if (sectionRef.current) {
+      sectionRef.current.style.setProperty('--tilt-x', '0deg');
+      sectionRef.current.style.setProperty('--tilt-y', '0deg');
+      sectionRef.current.style.setProperty('--tilt-shift-x', '0px');
+      sectionRef.current.style.setProperty('--tilt-shift-y', '0px');
+    }
+  };
 
   useEffect(() => {
     try {
@@ -436,12 +1078,45 @@ export default function TechMarquee() {
   return (
     <section
       id="stack"
-      className="tech-marquee-section relative z-10 w-full bg-[#030303] py-20 md:py-28 overflow-hidden border-t border-[var(--line)]/40"
+      ref={sectionRef}
+      onMouseMove={handleSectionMouseMove}
+      onMouseLeave={handleSectionMouseLeave}
+      className="tech-marquee-section relative z-10 w-full bg-[#030303] py-20 md:py-28 overflow-hidden border-t border-[var(--line)]/40 transition-colors duration-500"
       aria-label="Technologies and Technical Arsenal"
+      style={{
+        ['--tilt-x' as any]: '0deg',
+        ['--tilt-y' as any]: '0deg',
+        ['--tilt-shift-x' as any]: '0px',
+        ['--tilt-shift-y' as any]: '0px',
+      }}
     >
-      {/* Background Architectural Grid Accent */}
+      {/* Galaxy Cosmic Theme Elements - ONLY active when 3 Circles (Orbit) is selected */}
+      {viewMode === 'orbit' && (
+        <div className="pointer-events-none absolute inset-0 z-0 animate-in fade-in duration-500">
+          {/* Deep Space Cosmic Nebula Atmosphere */}
+          <div
+            className="absolute inset-0 opacity-70"
+            style={{
+              background: `
+                radial-gradient(circle at 18% 25%, rgba(255, 140, 89, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 82% 70%, rgba(99, 102, 241, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 70% 20%, rgba(217, 70, 239, 0.04) 0%, transparent 45%)
+              `,
+            }}
+            aria-hidden="true"
+          />
+
+          {/* Interactive Starfield Canvas (Twinkling stars, 3D parallax depth, constellation web & meteors) */}
+          <GalaxyCosmicCanvas motionEnabled={motionEnabled} mouseCoordRef={mouseCoordRef} />
+        </div>
+      )}
+
+      {/* Classic Architectural Grid Accent (Restores 100% original older theme for 3 Lines) */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[radial-gradient(#ff8c59_1px,transparent_1px)] [background-size:24px_24px]"
+        className={`pointer-events-none absolute inset-0 bg-[radial-gradient(#ff8c59_1px,transparent_1px)] [background-size:24px_24px] z-0 transition-opacity duration-500 ${
+          viewMode === 'orbit' ? 'opacity-[0.025]' : 'opacity-[0.035]'
+        }`}
         aria-hidden="true"
       />
 
@@ -467,21 +1142,15 @@ export default function TechMarquee() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pt-8">
-          <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-[#f1eee8] leading-[1.1] tracking-[-0.03em]">
-              Architected with{' '}
-              <em className="text-[#f1eee8] italic font-normal">modern tools.</em>
-            </h2>
-            <p className="mt-3 text-sm md:text-[15px] font-sans text-[var(--muted)] max-w-xl leading-relaxed">
-              Full-stack frameworks and UI systems elevated by modern vibe coding
-              workflows &mdash; accelerating architecture from idea to deployment.
-            </p>
-          </div>
-
-          <div className="text-[10px] font-mono text-[#888] tracking-[0.15em] shrink-0 uppercase">
-            <span>HOVER TO PAUSE &middot; INTERACTIVE</span>
-          </div>
+        <div className="pt-8 max-w-3xl">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-normal text-[#f1eee8] leading-[1.1] tracking-[-0.03em]">
+            Architected with{' '}
+            <em className="text-[#f1eee8] italic font-normal">modern tools.</em>
+          </h2>
+          <p className="mt-3 text-sm md:text-[15px] font-sans text-[var(--muted)] leading-relaxed">
+            Full-stack frameworks and UI systems elevated by modern vibe coding
+            workflows &mdash; accelerating architecture from idea to deployment.
+          </p>
         </div>
 
         {/* Vibe Coding Methodology Callout Banner */}
@@ -493,7 +1162,7 @@ export default function TechMarquee() {
             <div>
               <div className="flex items-center gap-2.5">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#ff8c59] font-semibold">
-                  VIBE CODING & AGENTIC WORKFLOW
+                  VIBE CODING &amp; AGENTIC WORKFLOW
                 </span>
                 <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-[#ff8c59]" />
                 <span className="hidden sm:inline-block text-[9px] font-mono text-[#a39b93] tracking-widest uppercase">
@@ -517,35 +1186,95 @@ export default function TechMarquee() {
         </div>
       </div>
 
-      {/* Row 1: Frontend & Design Systems (Forward Marquee) */}
-      <div className="mb-4 w-full">
-        <MarqueeRow
-          items={row1Technologies}
-          direction="left"
-          speed={34}
-          motionEnabled={motionEnabled}
-        />
-      </div>
+      {/* Interactive Visualizer Section (Concentric Circles or Marquee Stream) */}
+      <div className="relative w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-12 mt-8 sm:mt-10 overflow-visible">
+        {/* Top Control Bar with Title & Switcher at Top-Right Corner */}
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[var(--line)]/30 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 text-[9.5px] sm:text-[10px] font-mono text-[var(--muted)] uppercase tracking-widest">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+            <span>
+              {viewMode === 'orbit' ? 'ORBITAL SYSTEM' : 'CONTINUOUS STREAM'}
+            </span>
+          </div>
 
-      {/* Row 2: VIBE CODING & AI TOOLS (Featured Counter-Scroll) */}
-      <div className="mb-4 w-full">
-        <MarqueeRow
-          items={vibeCodingTechnologies}
-          direction="right"
-          speed={30}
-          motionEnabled={motionEnabled}
-          isSpecialRow={true}
-        />
-      </div>
+          {/* Switcher Pill in Circle Section Top Right Corner */}
+          <div
+            className="flex items-center gap-1 p-1 rounded-full border border-[var(--line)]/70 bg-[#0e0d0c]/90 shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-md shrink-0"
+            role="group"
+            aria-label="Toggle between lines and concentric circles"
+          >
+            <button
+              type="button"
+              onClick={() => setViewMode('orbit')}
+              className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer min-h-[34px] touch-manipulation select-none font-medium ${
+                viewMode === 'orbit'
+                  ? 'bg-[var(--accent)] text-[#030303] shadow-[0_0_14px_rgba(255,140,89,0.4)]'
+                  : 'text-[var(--muted)] hover:text-[#E5CBB0] active:scale-95'
+              }`}
+              aria-pressed={viewMode === 'orbit'}
+            >
+              <Orbit className="w-3.5 h-3.5" />
+              <span>3 Circles</span>
+            </button>
 
-      {/* Row 3: Backend, CMS & Infrastructure (Forward Marquee) */}
-      <div className="w-full">
-        <MarqueeRow
-          items={row3Technologies}
-          direction="left"
-          speed={38}
-          motionEnabled={motionEnabled}
-        />
+            <button
+              type="button"
+              onClick={() => setViewMode('lines')}
+              className={`flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer min-h-[34px] touch-manipulation select-none font-medium ${
+                viewMode === 'lines'
+                  ? 'bg-[var(--accent)] text-[#030303] shadow-[0_0_14px_rgba(255,140,89,0.4)]'
+                  : 'text-[var(--muted)] hover:text-[#E5CBB0] active:scale-95'
+              }`}
+              aria-pressed={viewMode === 'lines'}
+            >
+              <Rows3 className="w-3.5 h-3.5" />
+              <span>3 Lines</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Dynamic View: 3 Lines (Marquees) OR 3 Concentric Circles (Layers) */}
+        {viewMode === 'lines' ? (
+          <div className="w-full space-y-4 py-2 animate-in fade-in duration-300">
+            {/* Row 1: Frontend & Design Systems (Forward Marquee) */}
+            <div className="w-full">
+              <MarqueeRow
+                items={row1Technologies}
+                direction="left"
+                speed={34}
+                motionEnabled={motionEnabled}
+              />
+            </div>
+
+            {/* Row 2: VIBE CODING & AI TOOLS (Featured Counter-Scroll) */}
+            <div className="w-full">
+              <MarqueeRow
+                items={vibeCodingTechnologies}
+                direction="right"
+                speed={30}
+                motionEnabled={motionEnabled}
+                isSpecialRow={true}
+              />
+            </div>
+
+            {/* Row 3: Backend, CMS & Infrastructure (Forward Marquee) */}
+            <div className="w-full">
+              <MarqueeRow
+                items={row3Technologies}
+                direction="left"
+                speed={38}
+                motionEnabled={motionEnabled}
+              />
+            </div>
+          </div>
+        ) : (
+          <ConcentricCircleLayers
+            layer1={vibeCodingTechnologies}
+            layer2={row3Technologies}
+            layer3={row1Technologies}
+            motionEnabled={motionEnabled}
+          />
+        )}
       </div>
     </section>
   );

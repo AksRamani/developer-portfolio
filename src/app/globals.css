@@ -814,3 +814,90 @@ html[data-motion="off"] .marquee-group {
   }
 }
 
+/* ==========================================================================
+   CONCENTRIC ORBIT / 3 CIRCLE LAYERS
+   ========================================================================== */
+
+@keyframes orbit-spin-clockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-counter {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes orbit-counter-rotate-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes orbit-counter-rotate-ccw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-orbit-layer-1 {
+  animation: orbit-spin-clockwise 45s linear infinite;
+  will-change: transform;
+}
+
+.animate-counter-layer-1 {
+  animation: orbit-counter-rotate-cw 45s linear infinite;
+  will-change: transform;
+}
+
+.animate-orbit-layer-2 {
+  animation: orbit-spin-counter 55s linear infinite;
+  will-change: transform;
+}
+
+.animate-counter-layer-2 {
+  animation: orbit-counter-rotate-ccw 55s linear infinite;
+  will-change: transform;
+}
+
+.animate-orbit-layer-3 {
+  animation: orbit-spin-clockwise 70s linear infinite;
+  will-change: transform;
+}
+
+.animate-counter-layer-3 {
+  animation: orbit-counter-rotate-cw 70s linear infinite;
+  will-change: transform;
+}
+
+/* Pause concentric circles on hover or when paused */
+.orbit-layer-ring:hover,
+.orbit-layer-ring:hover .orbit-node-inner,
+.orbit-layer-paused,
+.orbit-layer-paused .orbit-node-inner {
+  animation-play-state: paused !important;
+}
+
+html[data-motion="off"] .animate-orbit-layer-1,
+html[data-motion="off"] .animate-counter-layer-1,
+html[data-motion="off"] .animate-orbit-layer-2,
+html[data-motion="off"] .animate-counter-layer-2,
+html[data-motion="off"] .animate-orbit-layer-3,
+html[data-motion="off"] .animate-counter-layer-3 {
+  animation-play-state: paused !important;
+}
+
