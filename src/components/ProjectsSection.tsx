@@ -217,11 +217,29 @@ interface PersonalProject {
   image: string;
   liveUrl: string;
   githubUrl: string;
+  liveLabel?: string;
 }
 
 const personalProjects: PersonalProject[] = [
   {
     number: "01",
+    category: "CHROME EXTENSION & WORKSPACE PRODUCTIVITY",
+    badge: "CHROME EXTENSION (MV3)",
+    title: "FocusFlow: To-Do List & Kanban Board",
+    subtitle:
+      "Minimalist dark-themed task manager & Kanban workspace transforming the browser New Tab.",
+    description:
+      "A clean, distraction-free productivity Chrome Extension (Manifest V3) transforming the browser New Tab into an ambient task management workspace. Features a 3-column Kanban board (To Do, In Progress, Done) with single-column focus tabs, ambient clock, smart bulk task import with automatic prefix & checkbox stripping, keyboard navigation (N, B, R), direct priority pills, PR link tracking on completed cards, and an end-of-day Markdown daily status report generator with one-click export for Slack and Jira. 100% offline and private via chrome.storage.local.",
+    metrics:
+      "Manifest V3 Architecture · Smart Bulk Import · PR Link Tracking · Daily Markdown Reporter",
+    tech: "JavaScript (ES6+) · Chrome Extensions API (MV3) · HTML5 · CSS3 · chrome.storage.local",
+    image: "/images/focusflow.png",
+    liveUrl: "https://github.com/AksRamani/FocusFlow",
+    githubUrl: "https://github.com/AksRamani/FocusFlow",
+    liveLabel: "Extension",
+  },
+  {
+    number: "02",
     category: "DOCUMENT INTELLIGENCE & PRODUCTIVITY",
     badge: "ADVANCED CANVAS MODULE",
     title: "SnapAnnotate PDF",
@@ -237,7 +255,7 @@ const personalProjects: PersonalProject[] = [
     githubUrl: "https://github.com/AksRamani",
   },
   {
-    number: "02",
+    number: "03",
     category: "REAL-TIME WEATHER FORECASTING",
     badge: "LIVE WEB APPLICATION",
     title: "Sky-Cast Weather Intelligence",
@@ -253,7 +271,7 @@ const personalProjects: PersonalProject[] = [
     githubUrl: "https://github.com/AksRamani",
   },
   {
-    number: "03",
+    number: "04",
     category: "CLIENT-SIDE UTILITIES",
     badge: "UTILITY APPLICATION",
     title: "Dynamic QR Code Generator",
@@ -268,7 +286,7 @@ const personalProjects: PersonalProject[] = [
     githubUrl: "https://github.com/AksRamani",
   },
   {
-    number: "04",
+    number: "05",
     category: "INTERACTIVE CATALOGS & GAMING",
     badge: "CATALOG EXPLORER",
     title: "Game Store Explorer",
@@ -595,7 +613,7 @@ export default function ProjectsSection() {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 text-xs font-mono tracking-wider uppercase text-[var(--accent)] hover:text-[#E5CBB0] transition-colors"
                         >
-                          <span>Live Demo</span>
+                          <span>{p.liveLabel || "Live Demo"}</span>
                           <ArrowUpRight className="w-3.5 h-3.5" />
                         </a>
                       )}
