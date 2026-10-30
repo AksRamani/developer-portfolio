@@ -215,7 +215,7 @@ interface PersonalProject {
   metrics: string;
   tech: string;
   image: string;
-  liveUrl: string;
+  liveUrl?: string;
   githubUrl: string;
   liveLabel?: string;
 }
@@ -251,7 +251,7 @@ const personalProjects: PersonalProject[] = [
       "Drag-and-Drop Annotations · Full Undo/Redo · Precise Coordinate Mapping",
     tech: "React.js · Canvas API · JavaScript · HTML5 · CSS3",
     image: "/images/snapannotate-pdf.png",
-    liveUrl: "https://portfolio-v2-aksramanis-projects.vercel.app/",
+    liveUrl: "",
     githubUrl: "https://github.com/AksRamani",
   },
   {
@@ -296,7 +296,7 @@ const personalProjects: PersonalProject[] = [
     metrics: "Category-wise Filtering · List & Grid Views · Redux Global State",
     tech: "React.js · Redux · Tailwind CSS · Component Architecture",
     image: "/images/gamestore.png",
-    liveUrl: "https://portfolio-v2-aksramanis-projects.vercel.app/",
+    liveUrl: "",
     githubUrl: "https://github.com/AksRamani",
   },
 ];
