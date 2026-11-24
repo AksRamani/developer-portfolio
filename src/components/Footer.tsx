@@ -6,7 +6,7 @@ import { ArrowUpRight, ArrowUp, Phone, Mail } from 'lucide-react';
 const socialLinks = [
   { label: 'GitHub', href: 'https://github.com/AksRamani' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aakash-ramani-541321235/' },
-  { label: 'Portfolio V2', href: 'https://portfolio-v2-aksramanis-projects.vercel.app/' },
+  { label: 'Portfolio', href: 'https://aakashramani.vercel.app/' },
 ];
 
 export default function Footer() {

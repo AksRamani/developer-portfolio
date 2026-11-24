@@ -9,7 +9,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio-v2-aksramanis-projects.vercel.app'),
+  metadataBase: new URL('https://aakashramani.vercel.app'),
   title: 'Aakash Ramani | Frontend Developer & Web Developer',
   description:
     'Portfolio of Aakash Ramani — Frontend Developer & Web Developer based in India with 4+ years of experience in React.js, Next.js, Redux, Node.js, and modern web architectures. Available for remote and global opportunities.',
@@ -109,7 +109,7 @@ export const metadata: Metadata = {
     'AI-Augmented Software Development',
     'Developer Portfolio',
   ],
-  authors: [{ name: 'Aakash Ramani', url: 'https://portfolio-v2-aksramanis-projects.vercel.app' }],
+  authors: [{ name: 'Aakash Ramani', url: 'https://aakashramani.vercel.app' }],
   creator: 'Aakash Ramani',
   alternates: {
     canonical: '/',
@@ -122,7 +122,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_IN',
-    url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
+    url: 'https://aakashramani.vercel.app',
     title: 'Aakash Ramani | Frontend Developer & Web Developer',
     description:
       'Frontend Developer & Web Developer based in India with 4+ years of experience in React.js, Next.js, Redux, Node.js, and modern web architectures. Available for remote and global opportunities.',
@@ -184,13 +184,13 @@ export default function RootLayout({
               '@graph': [
                 {
                   '@type': 'Person',
-                  '@id': 'https://portfolio-v2-aksramanis-projects.vercel.app/#person',
+                  '@id': 'https://aakashramani.vercel.app/#person',
                   name: 'Aakash Ramani',
                   jobTitle: 'Frontend Developer & Web Developer',
                   telephone: '+919725808487',
                   email: 'aakash.ramani021@gmail.com',
-                  url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
-                  image: 'https://portfolio-v2-aksramanis-projects.vercel.app/images/og-image.png',
+                  url: 'https://aakashramani.vercel.app',
+                  image: 'https://aakashramani.vercel.app/images/og-image.png',
                   homeLocation: {
                     '@type': 'Place',
                     name: 'India',
@@ -228,13 +228,13 @@ export default function RootLayout({
                 },
                 {
                   '@type': 'WebSite',
-                  '@id': 'https://portfolio-v2-aksramanis-projects.vercel.app/#website',
-                  url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
+                  '@id': 'https://aakashramani.vercel.app/#website',
+                  url: 'https://aakashramani.vercel.app',
                   name: 'Aakash Ramani Portfolio',
                   description:
                     'Portfolio of Aakash Ramani — Frontend Developer specializing in React.js, Next.js, and modern web applications.',
                   publisher: {
-                    '@id': 'https://portfolio-v2-aksramanis-projects.vercel.app/#person',
+                    '@id': 'https://aakashramani.vercel.app/#person',
                   },
                   inLanguage: 'en-IN',
                 },
