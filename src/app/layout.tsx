@@ -1,6 +1,12 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
+
+export const viewport: Viewport = {
+  themeColor: '#030303',
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://portfolio-v2-aksramanis-projects.vercel.app'),
@@ -11,19 +17,23 @@ export const metadata: Metadata = {
     'Aakash Ramani',
     'Frontend Developer',
     'Web Developer',
-    'React.js',
+    'React.js Developer',
     'Next.js 16',
-    'JavaScript',
+    'JavaScript Engineer',
     'Redux',
     'Tailwind CSS',
     'Node.js',
     'Express.js',
     'MongoDB',
     'Shopify Hydrogen',
+    'Chrome Extension Developer',
     'Portfolio',
   ],
   authors: [{ name: 'Aakash Ramani', url: 'https://portfolio-v2-aksramanis-projects.vercel.app' }],
   creator: 'Aakash Ramani',
+  alternates: {
+    canonical: '/',
+  },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',
@@ -37,6 +47,14 @@ export const metadata: Metadata = {
     description:
       'Frontend Developer with 4+ years of experience in React.js, Next.js, Redux, Node.js, Express.js, MongoDB, Material-UI, Ant Design, and Tailwind CSS.',
     siteName: 'Aakash Ramani Portfolio',
+    images: [
+      {
+        url: '/images/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Aakash Ramani — Frontend Developer & Web Architect',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -44,10 +62,18 @@ export const metadata: Metadata = {
     description:
       'Frontend Developer with 4+ years of experience in React.js, Next.js, Redux, and modern web architectures.',
     creator: '@AksRamani',
+    images: ['/images/og-image.png'],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -72,28 +98,49 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: 'Aakash Ramani',
-              jobTitle: 'Frontend Developer',
-              telephone: '+919725808487',
-              email: 'aakash.ramani021@gmail.com',
-              url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
-              sameAs: [
-                'https://github.com/AksRamani',
-                'https://www.linkedin.com/in/aakash-ramani-541321235/',
-              ],
-              knowsAbout: [
-                'React.js',
-                'Next.js',
-                'Redux',
-                'JavaScript',
-                'Node.js',
-                'Express.js',
-                'MongoDB',
-                'Tailwind CSS',
-                'Material-UI',
-                'Ant Design',
-                'Shopify Hydrogen',
+              '@graph': [
+                {
+                  '@type': 'Person',
+                  '@id': 'https://portfolio-v2-aksramanis-projects.vercel.app/#person',
+                  name: 'Aakash Ramani',
+                  jobTitle: 'Frontend Developer & Web Developer',
+                  telephone: '+919725808487',
+                  email: 'aakash.ramani021@gmail.com',
+                  url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
+                  image: 'https://portfolio-v2-aksramanis-projects.vercel.app/images/og-image.png',
+                  sameAs: [
+                    'https://github.com/AksRamani',
+                    'https://www.linkedin.com/in/aakash-ramani-541321235/',
+                  ],
+                  knowsAbout: [
+                    'React.js',
+                    'Next.js',
+                    'Redux',
+                    'JavaScript',
+                    'TypeScript',
+                    'Node.js',
+                    'Express.js',
+                    'MongoDB',
+                    'Tailwind CSS',
+                    'Material-UI',
+                    'Ant Design',
+                    'Shopify Hydrogen',
+                    'Chrome Extensions',
+                    'Web Performance & Core Web Vitals',
+                  ],
+                },
+                {
+                  '@type': 'WebSite',
+                  '@id': 'https://portfolio-v2-aksramanis-projects.vercel.app/#website',
+                  url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
+                  name: 'Aakash Ramani Portfolio',
+                  description:
+                    'Portfolio of Aakash Ramani — Frontend Developer specializing in React.js, Next.js, and modern web applications.',
+                  publisher: {
+                    '@id': 'https://portfolio-v2-aksramanis-projects.vercel.app/#person',
+                  },
+                  inLanguage: 'en-IN',
+                },
               ],
             }),
           }}
