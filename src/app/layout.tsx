@@ -202,7 +202,7 @@ export default function RootLayout({
                   sameAs: [
                     'https://github.com/AksRamani',
                     'https://www.linkedin.com/in/aakash-ramani-541321235/',
-                    'https://www.instagram.com/aakash__ramani_/',
+                    'https://www.instagram.com/aks__ramani_/',
                   ],
                   knowsAbout: [
                     'React.js',
