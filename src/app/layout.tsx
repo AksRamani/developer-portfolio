@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://aakashramani.vercel.app'),
   title: 'Aakash Ramani | Frontend Developer & Web Developer',
   description:
-    'Portfolio of Aakash Ramani — Frontend Developer & Web Developer based in India with 4+ years of experience in React.js, Next.js, Redux, Node.js, and modern web architectures. Available for remote and global opportunities.',
+    'Portfolio of Aakash Ramani — Frontend Developer specializing in React.js, Next.js, TypeScript & modern web apps. Available for remote & global roles.',
   keywords: [
     // Identity, Roles & Hiring Intent
     'Aakash Ramani',
@@ -125,7 +125,7 @@ export const metadata: Metadata = {
     url: 'https://aakashramani.vercel.app',
     title: 'Aakash Ramani | Frontend Developer & Web Developer',
     description:
-      'Frontend Developer & Web Developer based in India with 4+ years of experience in React.js, Next.js, Redux, Node.js, and modern web architectures. Available for remote and global opportunities.',
+      'Portfolio of Aakash Ramani — Frontend Developer specializing in React.js, Next.js, TypeScript & modern web apps. Available for remote & global roles.',
     siteName: 'Aakash Ramani Portfolio',
     images: [
       {
@@ -140,7 +140,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Aakash Ramani | Frontend Developer & Web Developer',
     description:
-      'Frontend Developer based in India with 4+ years of experience in React.js, Next.js, Redux, and modern web architectures. Available for remote and global opportunities.',
+      'Portfolio of Aakash Ramani — Frontend Developer specializing in React.js, Next.js, TypeScript & modern web apps. Available for remote & global roles.',
     creator: '@AksRamani',
     images: ['/images/og-image.png'],
   },
