@@ -12,11 +12,14 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://portfolio-v2-aksramanis-projects.vercel.app'),
   title: 'Aakash Ramani | Frontend Developer & Web Developer',
   description:
-    'Portfolio of Aakash Ramani — Frontend Developer with 4+ years of experience in React.js, Next.js, Redux, Node.js, Express.js, MongoDB, Material-UI, Ant Design, and Tailwind CSS.',
+    'Portfolio of Aakash Ramani — Frontend Developer & Web Developer based in India with 4+ years of experience in React.js, Next.js, Redux, Node.js, and modern web architectures. Available for remote and global opportunities.',
   keywords: [
     'Aakash Ramani',
     'Frontend Developer',
     'Web Developer',
+    'Frontend Developer India',
+    'Remote Frontend Developer',
+    'React Developer India',
     'React.js Developer',
     'Next.js 16',
     'JavaScript Engineer',
@@ -27,6 +30,7 @@ export const metadata: Metadata = {
     'MongoDB',
     'Shopify Hydrogen',
     'Chrome Extension Developer',
+    'Hire Frontend Developer',
     'Portfolio',
   ],
   authors: [{ name: 'Aakash Ramani', url: 'https://portfolio-v2-aksramanis-projects.vercel.app' }],
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
     url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
     title: 'Aakash Ramani | Frontend Developer & Web Developer',
     description:
-      'Frontend Developer with 4+ years of experience in React.js, Next.js, Redux, Node.js, Express.js, MongoDB, Material-UI, Ant Design, and Tailwind CSS.',
+      'Frontend Developer & Web Developer based in India with 4+ years of experience in React.js, Next.js, Redux, Node.js, and modern web architectures. Available for remote and global opportunities.',
     siteName: 'Aakash Ramani Portfolio',
     images: [
       {
@@ -60,7 +64,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Aakash Ramani | Frontend Developer & Web Developer',
     description:
-      'Frontend Developer with 4+ years of experience in React.js, Next.js, Redux, and modern web architectures.',
+      'Frontend Developer based in India with 4+ years of experience in React.js, Next.js, Redux, and modern web architectures. Available for remote and global opportunities.',
     creator: '@AksRamani',
     images: ['/images/og-image.png'],
   },
@@ -108,6 +112,14 @@ export default function RootLayout({
                   email: 'aakash.ramani021@gmail.com',
                   url: 'https://portfolio-v2-aksramanis-projects.vercel.app',
                   image: 'https://portfolio-v2-aksramanis-projects.vercel.app/images/og-image.png',
+                  homeLocation: {
+                    '@type': 'Place',
+                    name: 'India',
+                  },
+                  address: {
+                    '@type': 'PostalAddress',
+                    addressCountry: 'IN',
+                  },
                   sameAs: [
                     'https://github.com/AksRamani',
                     'https://www.linkedin.com/in/aakash-ramani-541321235/',
