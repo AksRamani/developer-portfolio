@@ -223,6 +223,22 @@ interface PersonalProject {
 const personalProjects: PersonalProject[] = [
   {
     number: "01",
+    category: "FINTECH & REAL-TIME TRADING BROWSER RUNTIME",
+    badge: "CHROME EXTENSION (MV3)",
+    title: "TradePulse: Real-Time Trading & Portfolio Monitor",
+    subtitle:
+      "Universal multi-tab trading status bar with live P&L streaming, Shadow DOM isolation, and automated trade journaling.",
+    description:
+      "A high-frequency Chrome extension (Manifest V3) that docks an interactive trading status bar across all browser tabs without DOM collisions, using isolated Shadow DOM injection. Synchronizes real-time market ticks every 3 seconds, displaying live open positions dynamically sorted from highest profit to largest loss with real-time green/red price flashes and instant trade exit triggers. Features an expandable full-width drawer table (▲) with detailed metrics (Entry, LTP, Target, Stop Loss, and Exit All), alongside a freely draggable floating pill (Alt+S) with persistent screen coordinates across tab refreshes. Built-in Indian market hours intelligence (9:00 AM – 3:30 PM IST) automatically hides the interface at market close. At 3:30 PM, an automated sync engine executes end-of-day trade journaling by updating a 14-column Google Sheets master ledger via Apps Script webhooks with live auto-calculating profit formulas, while concurrently exporting granular multi-profile trade-by-trade CSV logs (150+ trades with entry/exit timestamps, charges, and exit reasons) directly to local storage.",
+    metrics:
+      "Isolated Shadow DOM · Live P&L Sorting · Draggable Floating Pill · Market Auto-Hide · Google Sheets Webhook · Multi-Profile CSV Exporter",
+    tech: "JavaScript (ES6+) · Chrome Extensions API (MV3) · Shadow DOM · Webhooks · Google Apps Script · CSV Data Pipeline",
+    image: "/images/tradepulse.png",
+    liveUrl: "",
+    githubUrl: "https://github.com/AksRamani",
+  },
+  {
+    number: "02",
     category: "CHROME EXTENSION & WORKSPACE PRODUCTIVITY",
     badge: "CHROME EXTENSION (MV3)",
     title: "FocusFlow: To-Do List & Kanban Board",
@@ -239,7 +255,7 @@ const personalProjects: PersonalProject[] = [
     liveLabel: "Extension",
   },
   {
-    number: "02",
+    number: "03",
     category: "DOCUMENT INTELLIGENCE & PRODUCTIVITY",
     badge: "ADVANCED CANVAS MODULE",
     title: "SnapAnnotate PDF",
@@ -255,7 +271,7 @@ const personalProjects: PersonalProject[] = [
     githubUrl: "https://github.com/AksRamani",
   },
   {
-    number: "03",
+    number: "04",
     category: "REAL-TIME WEATHER FORECASTING",
     badge: "LIVE WEB APPLICATION",
     title: "Sky-Cast Weather Intelligence",
@@ -271,7 +287,7 @@ const personalProjects: PersonalProject[] = [
     githubUrl: "https://github.com/AksRamani",
   },
   {
-    number: "04",
+    number: "05",
     category: "CLIENT-SIDE UTILITIES",
     badge: "UTILITY APPLICATION",
     title: "Dynamic QR Code Generator",
@@ -286,7 +302,7 @@ const personalProjects: PersonalProject[] = [
     githubUrl: "https://github.com/AksRamani",
   },
   {
-    number: "05",
+    number: "06",
     category: "INTERACTIVE CATALOGS & GAMING",
     badge: "CATALOG EXPLORER",
     title: "Game Store Explorer",
