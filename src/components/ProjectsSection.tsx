@@ -243,12 +243,12 @@ const personalProjects: PersonalProject[] = [
     badge: "CHROME EXTENSION (MV3)",
     title: "FocusFlow: To-Do List & Kanban Board",
     subtitle:
-      "Minimalist dark-themed task manager & Kanban workspace transforming the browser New Tab.",
+      "Glassmorphic Kanban workspace & task manager with custom wallpapers, daily Markdown status reports, and PR link tracking.",
     description:
-      "A clean, distraction-free productivity Chrome Extension (Manifest V3) transforming the browser New Tab into an ambient task management workspace. Features a 3-column Kanban board (To Do, In Progress, Done) with single-column focus tabs, ambient clock, smart bulk task import with automatic prefix & checkbox stripping, keyboard navigation (N, B, R), direct priority pills, PR link tracking on completed cards, and an end-of-day Markdown daily status report generator with one-click export for Slack and Jira. 100% offline and private via chrome.storage.local.",
+      "A distraction-free productivity Chrome Extension (Manifest V3) that transforms every browser New Tab into an ambient task management workspace. Features full theme personalization with transparent glassmorphism, custom wallpaper upload, background removal, preset themes (Pure Dark, Aurora, Cyber Indigo), and frosted blur/transparency sliders. Engineered with a 3-column Kanban board, single-column focus tabs, smart bulk task import with automatic bullet/checkbox stripping, keyboard shortcuts (N, B, R, S, L), and on-card PR link tracking with one-click copying. Generates an end-of-day daily status report categorized by status with one-click Markdown copy for instant sharing into Slack, Teams, and Jira. 100% offline & private via chrome.storage.local.",
     metrics:
-      "Manifest V3 Architecture · Smart Bulk Import · PR Link Tracking · Daily Markdown Reporter",
-    tech: "JavaScript (ES6+) · Chrome Extensions API (MV3) · HTML5 · CSS3 · chrome.storage.local",
+      "Glassmorphism & Theme Customization · 1-Click Markdown Report Copy · PR Link Tracking · Smart Bulk Import · Quick Links Dock",
+    tech: "JavaScript (ES6+) · Chrome Extensions API (MV3) · HTML5 · CSS3 Glassmorphism · chrome.storage.local",
     image: "/images/focusflow.png",
     liveUrl: "https://github.com/AksRamani/FocusFlow",
     githubUrl: "https://github.com/AksRamani/FocusFlow",
